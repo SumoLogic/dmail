@@ -1,0 +1,14 @@
+{
+  "name": "dmail",
+  "version": "1.0.0",
+  "dependencies": {
+    "casperjs": "^1.1.1",
+    "commander": "^2.9.0",
+    "nodemailer": "^2.4.2",
+    "phantomjs-prebuilt": "^2.1.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node_modules/casperjs/bin/casperjs dmail.js"
+  }
+}
