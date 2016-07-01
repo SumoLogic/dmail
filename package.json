@@ -5,10 +5,13 @@
     "casperjs": "^1.1.1",
     "commander": "^2.9.0",
     "nodemailer": "^2.4.2",
-    "phantomjs-prebuilt": "^2.1.7"
+    "phantomjs-prebuilt": "^2.1.7",
+    "slimerjs": "^0.906.2"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node_modules/casperjs/bin/casperjs dmail.js"
+    "render": "node_modules/casperjs/bin/casperjs render_dashboard.js",
+    "render-slimer": "node_modules/casperjs/bin/casperjs --engine=slimerjs render_dashboard.js",
+    "send": "node send_email.js"
   }
 }

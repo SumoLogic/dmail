@@ -1,15 +1,8 @@
-// ------------------------------------------------------------
-// dmail.js creates emails from Sumo Logic dashboards.
-// This is a total hack, but it seems to work for me.
-// christian@sumologic.com
-// ------------------------------------------------------------
-
-
 //
 // Some constants.
 //
 
-var DOCUMENT_WIDTH = 1024;
+var DOCUMENT_WIDTH = 720;
 var DOCUMENT_HEIGHT = 3000;
 
 
@@ -21,7 +14,7 @@ var casper = require('casper').create({
     verbose: true,
     logLevel: 'debug',
     viewportSize: {
-        width: DOCUMENT_WIDTH,
+        width: 720,
         height: DOCUMENT_HEIGHT
     }
 });
@@ -106,7 +99,6 @@ casper.waitForSelector('#input-email', function() {
     	'password': password
     }, 
 	true);
-	casper.viewportSize = { width: 500, height: 300 };
 });
 casper.waitForSelector('.iris-content', function() {
 	casper.log("[DMAIL] Got selector: .iris-content, now waiting for sessionids to be deleted...", 'info');
