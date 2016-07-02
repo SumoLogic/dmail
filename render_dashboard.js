@@ -2,7 +2,7 @@
 // Some constants.
 //
 
-var DOCUMENT_WIDTH = 720;
+var DOCUMENT_WIDTH = 1024;
 var DOCUMENT_HEIGHT = 3000;
 
 
@@ -14,7 +14,7 @@ var casper = require('casper').create({
     verbose: true,
     logLevel: 'debug',
     viewportSize: {
-        width: 720,
+        width: DOCUMENT_WIDTH,
         height: DOCUMENT_HEIGHT
     }
 });
@@ -26,17 +26,19 @@ var casper = require('casper').create({
 
 var system = require('system');
 var args = system.args;
-if (args.length != 8) {
-    casper.log("Arguments: [username] [password] [dashboard-id] [output-filename]", "error");
+if (args.length != 9) {
+    casper.log("Arguments: [username] [password] [url] [dashboard-id] [output-filename]", "error");
     casper.exit();
 }
 
 var username = args[4];
 var password = args[5];
-var dashboardId = args[6];
-var filename = args[7];
+var url = args[6];
+var dashboardId = args[7];
+var filename = args[8];
 casper.log("Username    : " + username);
 casper.log("Password    : ********");
+casper.log("URL: " + url);
 casper.log("Dashboard ID: " + dashboardId);
 casper.log("Filename    : " + filename);
 
@@ -87,9 +89,9 @@ casper.options.onResourceReceived = function(C, response) {
 // Put together the plan to execute.
 //
 
-var url = "https://us2-www.sumologic.net/ui/dashboard.html?f=" + + dashboardId + "&t=r";
-casper.start(url, function() {
-	casper.log("[DMAIL] Started with URL: " + url, 'info');
+var dashboardUrl = url + "/ui/dashboard.html?f=" + + dashboardId + "&t=r";
+casper.start(dashboardUrl, function() {
+	casper.log("[DMAIL] Started with URL: " + dashboardUrl, 'info');
 });
 casper.waitForSelector('#input-email', function() {
 	casper.log("[DMAIL] Got selector #input-email, now filling login form...", 'info');
@@ -129,7 +131,7 @@ casper.waitForSelector('div#overanddone', function() {
 // Execute the plan.
 //
 
-casper.log("[DMAIL] Capturing URL: " + url, 'info');
+casper.log("[DMAIL] Capturing URL: " + dashboardUrl, 'info');
 casper.run();
 
 
