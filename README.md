@@ -14,7 +14,7 @@ sudo apt-get install -y nodejs
 npm install
 ```
 
-This link was helpful: [https://nodejs.org/en/download/package-manager/]
+This link was helpful: https://nodejs.org/en/download/package-manager/
 
 I also have it working on my Mac, but forgot to take notes on the installation. `npm install` might be all that's required tho. Happy to add instructions here if somebody wants to submit a PR.
 
