@@ -1,3 +1,12 @@
+/*
+ * dmail
+ * 
+ * Christian Beedgen (christian@sumologic)
+ * 
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE', which is part of this source code package.
+ */
+
 var execSync = require('child_process').execSync;
 var program = require('commander');
 
