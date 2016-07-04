@@ -8,10 +8,5 @@
     "phantomjs-prebuilt": "^2.1.7",
     "slimerjs": "^0.906.2"
   },
-  "devDependencies": {},
-  "scripts": {
-    "render": "node_modules/casperjs/bin/casperjs render_dashboard.js",
-    "render-slimer": "node_modules/casperjs/bin/casperjs --engine=slimerjs render_dashboard.js",
-    "send": "node send_email.js"
-  }
+  "devDependencies": {}
 }

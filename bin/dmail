@@ -1,1 +1,2 @@
-node dmail.js $*
+#!/usr/bin/env bash
+/usr/bin/env node dmail.js "$@"

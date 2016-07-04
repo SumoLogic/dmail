@@ -14,6 +14,7 @@ program
     .option('--mail-user <mailUser>', 'mail user to log in as')
     .option('--mail-password <mailPassword>', 'password of the mail user')
     .option('--mail-host <mailHost>', 'mail host to send email')
+    .option('--mail-subject <mailSubject>', 'The subject of the email')
     .option('-r, --receiver <receiver>', 'address of the receiver of the email')
     .parse(process.argv);
 
@@ -49,6 +50,11 @@ if (!program.receiver) {
     console.log("Receiver argument (-r, --receiver) required");
     process.exit();
 }
+if (!program.mailSubject) {
+    console.log("Subject argument (--mail-subject) required");
+    process.exit();
+}
+
 
 //
 // Echo the arguments.
@@ -61,6 +67,7 @@ console.log("Dashboard ID:  " + program.dashboardId);
 console.log("Mail user:     " + program.mailUser);
 console.log("Mail password: ********");
 console.log("Mail host:     " + program.mailHost);
+console.log("Mail subject:  " + program.mailSubject);
 console.log("Receiver:      " + program.receiver);
 
 
@@ -71,7 +78,7 @@ console.log("Receiver:      " + program.receiver);
 console.log("\nRendering dashboard...\n")
 var url = "https://" + program.deployment + "-www.sumologic.net";
 var filename = "/tmp/out" + Date.now() + ".png";
-var renderCommand = "npm run-script render " +
+var renderCommand = "bin/render_dashboard " +
     program.user + " " + program.password + " " + url + " " + program.dashboardId + " " + filename;
 execSync(renderCommand, {stdio: 'inherit'});
 
@@ -83,8 +90,9 @@ execSync(renderCommand, {stdio: 'inherit'});
 console.log("\nSending email...\n")
 var transportSpec = "smtps://" + encodeURIComponent(program.mailUser) + ":" +
     program.mailPassword + "@" + program.mailHost;
-var sendCommand = "npm run-script send " +
-    transportSpec + " " + filename + " " + url + " " + program.dashboardId + " " + program.receiver;
+var sendCommand = "bin/send_email " +
+    transportSpec + " " + filename + " " + url + " " + program.dashboardId + " " +
+    program.receiver + " \"" + program.mailSubject + "\"";
 execSync(sendCommand, {stdio: 'inherit'});
 
 
