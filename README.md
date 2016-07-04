@@ -23,9 +23,8 @@ Simple - run `bin/dmail` with a giant commandline :)
 Here's what I do:
 
 ```
-bin/dmail -u [user] -p [password] \
-          -d us2 --dashboard-id 30486094
-          --mail-user [mail-user] --mail-password [mail-password] --mail-host smtp.gmail.com
-          -r christian@sumologic.com
+bin/dmail -u [user] -p [password] -d us2 --dashboard-id 30486094 \
+          --mail-user [mail-user] --mail-password [mail-password] --mail-host smtp.gmail.com \
+          -r christian@sumologic.com \
           --mail-subject "[DMAIL] Search Summary Last 7 Day
 ```
