@@ -51,7 +51,7 @@ Here's the full explanation of the commandline arguments. Note that all paramete
     --mail-user <mailUser>          mail user to log in as
     --mail-password <mailPassword>  password of the mail user
     --mail-host <mailHost>          mail host to send email
-    --mail-subject <mailSubject>    The subject of the email
+    --mail-subject <mailSubject>    the subject of the email
     -r, --receiver <receiver>       address of the receiver of the email
 ```
 
