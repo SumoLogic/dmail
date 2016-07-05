@@ -35,6 +35,26 @@ bin/dmail -u [user] -p [password] -d us2 --dashboard-id 30486094 \
           --mail-subject "[DMAIL] Search Summary Last 7 Day
 ```
 
+Here's the full explanation of the commandline arguments. Note that all parameters are required!
+
+```
+  Usage: dmail [options]
+
+  Options:
+
+    -h, --help                      output usage information
+    -V, --version                   output the version number
+    -u, --user <user>               user to log in as to Sumo Logic
+    -p, --password <password>       password for logging in
+    -d, --deployment <deployment>   name of the Sumo Logic deployment for logging in
+    --dashboard-id <dashboardId>    ID of the dashboard to email
+    --mail-user <mailUser>          mail user to log in as
+    --mail-password <mailPassword>  password of the mail user
+    --mail-host <mailHost>          mail host to send email
+    --mail-subject <mailSubject>    The subject of the email
+    -r, --receiver <receiver>       address of the receiver of the email
+```
+
 The all-important dashboard ID can be gleaned from the URL for the dashboard:
 
 ![Teaser](images/dashboard-id.png)
