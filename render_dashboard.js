@@ -128,7 +128,7 @@ casper.options.onResourceRequested = function (C, requestData, networkRequest) {
             // casper.log('    >>>> Request ' + JSON.stringify(requestData, undefined, 4), 'debug');
         }
     } catch (err) {
-        casper.log(err, 'error');
+        casper.log("[DMAIL] ERROR " + err, 'error');
     }
 };
 
@@ -164,22 +164,40 @@ casper.waitForSelector('.iris-content', function () {
 });
 casper.waitForSelector('div#overanddone', function () {
     this.wait(5000, function () {
-        try {
-            var documentHeight = casper.evaluate(function () {
-                return document.body.offsetHeight;
-            });
-            casper.log("[DMAIL] Document height: " + documentHeight);
-            casper.captureSelector(filename, '.iris-content', {
-                top: 0,
-                left: 0,
-                width: DOCUMENT_WIDTH,
-                height: 810
-            });
-            casper.log("[DMAIL] Caputred screen: " + filename, 'info');
-        } catch (err) {
-            casper.log("ERROR " + err);
+            try {
+
+                // http://stackoverflow.com/questions/16628737/setting-papersize-for-pdf-printing-in-casper
+
+                var divHeight = casper.evaluate(function () {
+                    return $(".iris-content").height();
+                });
+                casper.log("[DMAIL] Div height: " + divHeight);
+                if (filename.indexOf(".pdf") != null) {
+                    var height = divHeight + 58 + 20;
+                    this.viewport(DOCUMENT_WIDTH, height, function () {
+                        this.capture(filename, {
+                            top: 58,
+                            left: 0,
+                            width: DOCUMENT_WIDTH,
+                            height: height - 58
+                        });
+                    });
+                } else {
+                    casper.captureSelector(filename, '.iris-content', {
+                        top: 0,
+                        left: 0,
+                        width: DOCUMENT_WIDTH,
+                        height: divHeight
+                    });
+                }
+                casper.log("[DMAIL] Caputred screen: " + filename, 'info');
+            }
+            catch
+                (err) {
+                casper.log("[DMAIL] ERROR " + err, 'error');
+            }
         }
-    });
+    );
 });
 
 
