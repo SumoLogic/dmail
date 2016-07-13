@@ -11,7 +11,7 @@
 // Some constants.
 //
 
-var DOCUMENT_WIDTH = 1280;
+var DOCUMENT_WIDTH = 720;
 var DOCUMENT_HEIGHT = 3000;
 
 
@@ -158,40 +158,51 @@ casper.waitForSelector('#input-email', function () {
         },
         true);
 });
-casper.waitForSelector('.iris-content', function () {
-    casper.log("[DMAIL] Got selector: .iris-content, now waiting for sessionids to be deleted...", 'info');
+var selector = "#iris-view";
+casper.waitForSelector(selector, function () {
+    casper.log("[DMAIL] Got selector: " + selector + ", now waiting for sessionids to be deleted...", 'info');
     lastSessionsIdsCall = Date.now();
-    casper.evaluate(function () {
 
-        // From http://stackoverflow.com/a/19826393
-        function changeCss(className, classValue) {
-            // we need invisible container to store additional css definitions
-            var cssMainContainer = $('#css-modifier-container');
-            if (cssMainContainer.length == 0) {
-                var cssMainContainer = $('<div id="css-modifier-container"></div>');
-                cssMainContainer.hide();
-                cssMainContainer.appendTo($('body'));
-            }
-
-            // and we need one div for each class
-            classContainer = cssMainContainer.find('div[data-class="' + className + '"]');
-            if (classContainer.length == 0) {
-                classContainer = $('<div data-class="' + className + '"></div>');
-                classContainer.appendTo(cssMainContainer);
-            }
-
-            // append additional style
-            classContainer.html('<style>' + className + ' {' + classValue + '}</style>');
-        }
-
-        try {
-            canvas.log("[DMAIL] Changing min-width...", 'info');
-            changeCss(".gridster", "min-width: 400px;");
-            canvas.log("[DMAIL] Done changing min-width", 'info');
-        } catch (err) {
-            canvas.log("[DMAIL] ERROR in evaluate: " + err, 'err');
-        }
-    });
+    // casper.evaluate(function () {
+    //
+    //     try {
+    //         canvas.log("[DMAIL] Changing min-width...", 'info');
+    //         $("#iris-view").css({"min-width": "256px", "width": "720px"});
+    //         canvas.log("[DMAIL] Done changing min-width", 'info');
+    //     } catch (err) {
+    //         canvas.log("[DMAIL] ERROR in evaluate: " + err, 'err');
+    //     }
+    //
+    //
+    //     // // From http://stackoverflow.com/a/19826393
+    //     // function changeCss(className, classValue) {
+    //     //     // we need invisible container to store additional css definitions
+    //     //     var cssMainContainer = $('#css-modifier-container');
+    //     //     if (cssMainContainer.length == 0) {
+    //     //         var cssMainContainer = $('<div id="css-modifier-container"></div>');
+    //     //         cssMainContainer.hide();
+    //     //         cssMainContainer.appendTo($('body'));
+    //     //     }
+    //     //
+    //     //     // and we need one div for each class
+    //     //     classContainer = cssMainContainer.find('div[data-class="' + className + '"]');
+    //     //     if (classContainer.length == 0) {
+    //     //         classContainer = $('<div data-class="' + className + '"></div>');
+    //     //         classContainer.appendTo(cssMainContainer);
+    //     //     }
+    //     //
+    //     //     // append additional style
+    //     //     classContainer.html('<style>' + className + ' {' + classValue + '}</style>');
+    //     // }
+    //     //
+    //     // try {
+    //     //     canvas.log("[DMAIL] Changing min-width...", 'info');
+    //     //     changeCss("#iris-view", "min-width: 0px;");
+    //     //     canvas.log("[DMAIL] Done changing min-width", 'info');
+    //     // } catch (err) {
+    //     //     canvas.log("[DMAIL] ERROR in evaluate: " + err, 'err');
+    //     // }
+    // });
 });
 casper.waitForSelector('div#overanddone', function () {
     casper.log("[DMAIL] Detected that all session IDs have been deleted", 'info');
@@ -206,34 +217,48 @@ casper.wait(5000, function () {
         });
         casper.log("[DMAIL] Div height: " + divHeight);
         if (filename.indexOf(".pdf") != -1) {
+            casper.log("[DMAIL] PDF output", 'info');
+            var top = 58;
+            var left = 0;
             var height = divHeight + 58 + 20;
-            this.viewport(DOCUMENT_WIDTH, height, function () {
+            var width = DOCUMENT_WIDTH;
+            casper.log("[DMAIL] Top: " + top + ", left: " + left + ", width: " + width + ", height: " + height, 'info');
+            this.viewport(width, height, function () {
                 this.wait(5000, function () {
-                    this.capture(filename, {
-                        top: 58,
-                        left: 0,
-                        width: DOCUMENT_WIDTH,
-                        height: height - 58
-                    });
+                    try {
+                        this.capture(filename, {
+                            top: top,
+                            left: left,
+                            width: width,
+                            height: height - 58
+                        });
+                        casper.log("[DMAIL] Captured screen: " + filename, 'info');
+                    } catch (err) {
+                        casper.log("[DMAIL] ERROR " + err, 'error');
+                    }
                 });
             });
         } else {
-            var height = divHeight + 20;
-            this.viewport(DOCUMENT_WIDTH, height, function () {
-                this.wait(5000, function () {
-                    casper.captureSelector(filename, '.iris-content', {
-                        top: 0,
-                        left: 0,
-                        width: DOCUMENT_WIDTH,
-                        height: divHeight
-                    });
+            casper.log("[DMAIL] Non-PDF output", 'info');
+            var top = 0;
+            var left = 0;
+            var width = DOCUMENT_WIDTH;
+            var height = divHeight;
+            casper.log("[DMAIL] Top: " + top + ", left: " + left + ", width: " + width + ", height: " + height, 'info');
+            try {
+                casper.captureSelector(filename, '.iris-content', {
+                    top: top,
+                    left: left,
+                    width: width,
+                    height: height
                 });
-            });
+                casper.log("[DMAIL] Captured screen: " + filename, 'info');
+            } catch (err) {
+                casper.log("[DMAIL] ERROR " + err, 'error');
+            }
         }
-        casper.log("[DMAIL] Caputred screen: " + filename, 'info');
     }
-    catch
-        (err) {
+    catch (err) {
         casper.log("[DMAIL] ERROR " + err, 'error');
     }
 });
