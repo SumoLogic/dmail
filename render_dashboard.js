@@ -11,7 +11,7 @@
 // Some constants.
 //
 
-var DOCUMENT_WIDTH = 1024;
+var DOCUMENT_WIDTH = 1280;
 var DOCUMENT_HEIGHT = 3000;
 
 
@@ -161,43 +161,81 @@ casper.waitForSelector('#input-email', function () {
 casper.waitForSelector('.iris-content', function () {
     casper.log("[DMAIL] Got selector: .iris-content, now waiting for sessionids to be deleted...", 'info');
     lastSessionsIdsCall = Date.now();
+    casper.evaluate(function () {
+
+        // From http://stackoverflow.com/a/19826393
+        function changeCss(className, classValue) {
+            // we need invisible container to store additional css definitions
+            var cssMainContainer = $('#css-modifier-container');
+            if (cssMainContainer.length == 0) {
+                var cssMainContainer = $('<div id="css-modifier-container"></div>');
+                cssMainContainer.hide();
+                cssMainContainer.appendTo($('body'));
+            }
+
+            // and we need one div for each class
+            classContainer = cssMainContainer.find('div[data-class="' + className + '"]');
+            if (classContainer.length == 0) {
+                classContainer = $('<div data-class="' + className + '"></div>');
+                classContainer.appendTo(cssMainContainer);
+            }
+
+            // append additional style
+            classContainer.html('<style>' + className + ' {' + classValue + '}</style>');
+        }
+
+        try {
+            canvas.log("[DMAIL] Changing min-width...", 'info');
+            changeCss(".gridster", "min-width: 400px;");
+            canvas.log("[DMAIL] Done changing min-width", 'info');
+        } catch (err) {
+            canvas.log("[DMAIL] ERROR in evaluate: " + err, 'err');
+        }
+    });
 });
 casper.waitForSelector('div#overanddone', function () {
-    this.wait(5000, function () {
-            try {
+    casper.log("[DMAIL] Detected that all session IDs have been deleted", 'info');
+});
+casper.wait(5000, function () {
+    try {
 
-                // http://stackoverflow.com/questions/16628737/setting-papersize-for-pdf-printing-in-casper
+        // http://stackoverflow.com/questions/16628737/setting-papersize-for-pdf-printing-in-casper
 
-                var divHeight = casper.evaluate(function () {
-                    return $(".iris-content").height();
-                });
-                casper.log("[DMAIL] Div height: " + divHeight);
-                if (filename.indexOf(".pdf") != null) {
-                    var height = divHeight + 58 + 20;
-                    this.viewport(DOCUMENT_WIDTH, height, function () {
-                        this.capture(filename, {
-                            top: 58,
-                            left: 0,
-                            width: DOCUMENT_WIDTH,
-                            height: height - 58
-                        });
+        var divHeight = casper.evaluate(function () {
+            return $(".iris-content").height();
+        });
+        casper.log("[DMAIL] Div height: " + divHeight);
+        if (filename.indexOf(".pdf") != -1) {
+            var height = divHeight + 58 + 20;
+            this.viewport(DOCUMENT_WIDTH, height, function () {
+                this.wait(5000, function () {
+                    this.capture(filename, {
+                        top: 58,
+                        left: 0,
+                        width: DOCUMENT_WIDTH,
+                        height: height - 58
                     });
-                } else {
+                });
+            });
+        } else {
+            var height = divHeight + 20;
+            this.viewport(DOCUMENT_WIDTH, height, function () {
+                this.wait(5000, function () {
                     casper.captureSelector(filename, '.iris-content', {
                         top: 0,
                         left: 0,
                         width: DOCUMENT_WIDTH,
                         height: divHeight
                     });
-                }
-                casper.log("[DMAIL] Caputred screen: " + filename, 'info');
-            }
-            catch
-                (err) {
-                casper.log("[DMAIL] ERROR " + err, 'error');
-            }
+                });
+            });
         }
-    );
+        casper.log("[DMAIL] Caputred screen: " + filename, 'info');
+    }
+    catch
+        (err) {
+        casper.log("[DMAIL] ERROR " + err, 'error');
+    }
 });
 
 
