@@ -57,7 +57,7 @@ casper.log("Filename    : " + filename);
 //
 
 casper.userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X)');
-casper.options.waitTimeout = 5 * 60000;
+casper.options.waitTimeout = 15 * 60000;
 
 
 //
