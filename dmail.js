@@ -86,6 +86,12 @@ console.log("Receiver:      " + program.receiver);
 
 console.log("\nRendering dashboard...\n")
 var url = "https://" + program.deployment + "-www.sumologic.net";
+if (program.deployment == "us1" || program.deployment == "us1") {
+    url = "https://service.sumologic.com"
+} 
+if (program.deployment == "us2") {
+    url = "https://service.us2.sumologic.com"
+} 
 var filename = "/tmp/out" + Date.now() + ".png";
 var renderCommand = "bin/render_dashboard " +
     program.user + " " + program.password + " " + url + " " + program.dashboardId + " " + filename;
