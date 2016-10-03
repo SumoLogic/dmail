@@ -92,6 +92,12 @@ if (program.deployment == "us1" || program.deployment == "us1") {
 if (program.deployment == "us2") {
     url = "https://service.us2.sumologic.com"
 } 
+if (program.deployment == "dub" || program.deployment == "eu") {
+    url = "https://service.eu.sumologic.com"
+} 
+if (program.deployment == "syd" || program.deployment == "au") {
+    url = "https://service.au.sumologic.com"
+} 
 var filename = "/tmp/out" + Date.now() + ".png";
 var renderCommand = "bin/render_dashboard " +
     program.user + " " + program.password + " " + url + " " + program.dashboardId + " " + filename;
