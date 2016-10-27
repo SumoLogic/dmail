@@ -25,6 +25,7 @@ program
     .option('--mail-host <mailHost>', 'mail host to send email')
     .option('--mail-subject <mailSubject>', 'the subject of the email')
     .option('-r, --receiver <receiver>', 'address of the receiver of the email')
+    .option('-t, --timeout <milliseconds>', 'timeout after this many milliseconds')
     .parse(process.argv);
 
 if (!program.user) {
@@ -63,6 +64,9 @@ if (!program.mailSubject) {
     console.log("Subject argument (--mail-subject) required");
     process.exit();
 }
+if (!program.timeout) {
+    program.timeout = 900000;
+}
 
 
 //
@@ -78,6 +82,7 @@ console.log("Mail password: ********");
 console.log("Mail host:     " + program.mailHost);
 console.log("Mail subject:  " + program.mailSubject);
 console.log("Receiver:      " + program.receiver);
+console.log("Timeout:       " + program.timeout);
 
 
 //
@@ -100,7 +105,7 @@ if (program.deployment == "syd" || program.deployment == "au") {
 } 
 var filename = "/tmp/out" + Date.now() + ".png";
 var renderCommand = "bin/render_dashboard " +
-    program.user + " " + program.password + " " + url + " " + program.dashboardId + " " + filename;
+    program.user + " " + program.password + " " + url + " " + program.dashboardId + " " + filename + " " + program.timeout;
 execSync(renderCommand, {stdio: 'inherit'});
 
 

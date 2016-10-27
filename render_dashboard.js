@@ -35,9 +35,10 @@ var casper = require('casper').create({
 
 var system = require('system');
 var args = system.args;
-if (args.length != 9) {
-    casper.log("Arguments: [username] [password] [url] [dashboard-id] [output-filename]", "error");
+if (args.length != 10) {
+    casper.log("Arguments: [username] [password] [url] [dashboard-id] [output-filename] [timeout]", "error");
     casper.exit();
+    process.exit();
 }
 
 var username = args[4];
@@ -45,11 +46,13 @@ var password = args[5];
 var url = args[6];
 var dashboardId = args[7];
 var filename = args[8];
+var timeout = args[9];
 casper.log("Username    : " + username);
 casper.log("Password    : ********");
-casper.log("URL: " + url);
+casper.log("URL         : " + url);
 casper.log("Dashboard ID: " + dashboardId);
 casper.log("Filename    : " + filename);
+casper.log("Timeout     : " + timeout);
 
 
 //
@@ -57,7 +60,7 @@ casper.log("Filename    : " + filename);
 //
 
 casper.userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X)');
-casper.options.waitTimeout = 15 * 60000;
+casper.options.waitTimeout = timeout;
 
 
 //
