@@ -133,7 +133,7 @@ execSync(renderCommand, {stdio: 'inherit'});
 console.log("\nSending email...\n")
 if(program.ses){
   var sendCommand = "bin/send_email_ses " +
-      program.mailUser + " " + progran.mailPassword + " " + filename + " " + url + " " + program.dashboardId + " " +
+      program.mailUser + " " + program.mailPassword + " " + filename + " " + url + " " + program.dashboardId + " " +
       program.receiver + " \"" + program.mailSubject + "\"" + " " + progran.region;
 }else{
   var transportSpec = "smtps://" + encodeURIComponent(program.mailUser) + ":" +
