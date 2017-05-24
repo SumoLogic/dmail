@@ -147,7 +147,6 @@ if(program.ses){
 
 execSync(sendCommand, {stdio: 'inherit'});
 
-
 //
 // The end.
 //

@@ -22,6 +22,11 @@ This link was helpful: https://nodejs.org/en/download/package-manager/
 
 I also have it working on my Mac, but forgot to take notes on the installation. `npm install` might be all that's required tho. Happy to add instructions here if somebody wants to submit a PR.
 
+You may need to install libfontconfig :
+```bash
+sudo apt-get install libfontconfig
+```
+
 ## Run
 
 Simple - run `bin/dmail` with a giant commandline :)
@@ -29,7 +34,7 @@ Simple - run `bin/dmail` with a giant commandline :)
 Here's what I do:
 
 ```bash
-bin/dmail -u [user] -p [password] -d us2 --dashboard-id AWWmr1w65OKhIp9Y0lU0QYvwhoranel75MpZmqZt8hARxm4kcfrG6hD0G4us \
+bin/dmail -u [user] -p [password] -d us2 --dashboard-id 'AWWmr1w65OKhIp9Y0lU0QYvwhoranel75MpZmqZt8hARxm4kcfrG6hD0G4us' \
           --mail-user [mail-user] --mail-password [mail-password] --mail-host smtp.gmail.com \
           -r christian@sumologic.com \
           -s john@sumologic.com \
