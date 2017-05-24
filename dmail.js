@@ -80,9 +80,6 @@ if (!program.mailSubject) {
 if (!program.timeout) {
     program.timeout = 900000;
 }
-if (!program.ext) {
-    program.ext = ".png";
-}
 if (!program.region) {
     program.region = "us-east-1";
 }

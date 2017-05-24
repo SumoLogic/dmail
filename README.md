@@ -1,4 +1,4 @@
-# dmail - Send Sumo Logic dashboards via email
+# dmail - Send Sumo Logic dashboards via email (Support AWS Ses)
 
 A simple hack to capture a screenshot of a Sumo Logic dashboard, which is then embedded into an email.
 
@@ -32,6 +32,7 @@ Here's what I do:
 bin/dmail -u [user] -p [password] -d us2 --dashboard-id 30486094 \
           --mail-user [mail-user] --mail-password [mail-password] --mail-host smtp.gmail.com \
           -r christian@sumologic.com \
+          -s john@sumologic.com \
           --mail-subject "[DMAIL] Search Summary Last 7 Day
 ```
 

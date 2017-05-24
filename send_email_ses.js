@@ -40,7 +40,7 @@ var transporter = nodemailer.createTransport({
     tls: { rejectUnauthorized: false }
 });
 
-console.log("The email will be sent by " + sender + " and received by "receiver);
+console.log("The email will be sent by " + sender + " and received by "+receiver);
 
 //var transporter = nodemailer.createTransport(transportSpec);
 var uniqueID = "schnitzel" + Date.now();
