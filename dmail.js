@@ -26,7 +26,7 @@ program
     .option('--mail-subject <mailSubject>', 'the subject of the email')
     .option('-r, --receiver <receiver>', 'address of the receiver of the email')
     .option('-t, --timeout <milliseconds>', 'timeout after this many milliseconds')
-    .option('--extension <ext>', 'extension of dashboard rendered .png or .pdf')
+    .option('--ext <ext>', 'extension of dashboard rendered .png or .pdf')
     .option('--ses', 'send an email with AWS SES')
     .option('--region <region>', 'AWS SES region (default us-east-1')
     .parse(process.argv);
