@@ -31,9 +31,11 @@ var dashboardUrl = url + "/ui/dashboard.html?f=" + + dashboardId + "&t=r";
 var nodemailer = require('nodemailer');
 var aws = require('aws-sdk');
 
-var config = new AWS.Config({
+var config = new aws.Config({
   accessKeyId: mailUser, secretAccessKey: mailPassword, region: region
 });
+
+aws.config = config
 
 var transporter = nodemailer.createTransport({
     SES: new aws.SES({
