@@ -134,7 +134,7 @@ console.log("\nSending email...\n")
 if(program.ses){
   var sendCommand = "bin/send_email_ses " +
       program.mailUser + " " + program.mailPassword + " " + filename + " " + url + " " + program.dashboardId + " " +
-      program.receiver + " \"" + program.mailSubject + "\"" + " " + program.region;
+      program.receiver + " \"" + program.mailSubject + "\" " + program.region;
 }else{
   var transportSpec = "smtps://" + encodeURIComponent(program.mailUser) + ":" +
       program.mailPassword + "@" + program.mailHost;

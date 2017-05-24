@@ -23,7 +23,7 @@ var url = process.argv[5];
 var dashboardId = process.argv[6];
 var receiver = process.argv[7];
 var subject = process.argv[8];
-var region = process.argsv[9];
+var region = process.argv[9];
 
 
 var dashboardUrl = url + "/ui/dashboard.html?f=" + + dashboardId + "&t=r";
