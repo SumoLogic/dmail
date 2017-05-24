@@ -49,8 +49,8 @@ var mailOptions = {
     to: receiver,
     subject: subject,
     text: dashboardUrl + "\n\n" + 'Please enable HTML in your email client.\n',
-    html: '<a href="' + dashboardUrl + '">' + dashboardUrl + '</a>' +
-    '<br>iuewgfuiegrufiergeirugefiugeirugfeirufgiuegriu<br>' +
+    html: 'jeremy is a bitch and LOOOOOVED MAN<a href="' + dashboardUrl + '">' + dashboardUrl + '</a>' +
+    '<br><br>' +
     '<img src="cid:' + uniqueID + '"/>',
     attachments: [{
         filename: filename,
