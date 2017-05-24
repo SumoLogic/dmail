@@ -22,7 +22,7 @@ program
     .option('--dashboard-id <dashboardId>', 'ID of the dashboard to email')
     .option('--mail-user <mailUser>', 'mail user to log in as')
     .option('--mail-password <mailPassword>', 'password of the mail user')
-    .option('--mail-host <mailHost>', 'mail host to send email')
+    .option('--mail-host <mailHost>', 'mail host to send email (not required for SES)')
     .option('--mail-subject <mailSubject>', 'the subject of the email')
     .option('-s, --sender <sender>', 'address of the sender of the email')
     .option('-r, --receiver <receiver>', 'address of the receiver of the email')
