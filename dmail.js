@@ -1,8 +1,8 @@
 /*
  * dmail
- * 
+ *
  * Christian Beedgen (christian@sumologic)
- * 
+ *
  * This file is subject to the terms and conditions defined in
  * file 'LICENSE', which is part of this source code package.
  */
@@ -26,6 +26,9 @@ program
     .option('--mail-subject <mailSubject>', 'the subject of the email')
     .option('-r, --receiver <receiver>', 'address of the receiver of the email')
     .option('-t, --timeout <milliseconds>', 'timeout after this many milliseconds')
+    .option('--extension <ext>', 'extension of dashboard rendered .png or .pdf')
+    .option('--ses', 'send an email with AWS SES')
+    .option('--region <region>', 'AWS SES region (default us-east-1')
     .parse(process.argv);
 
 if (!program.user) {
@@ -52,7 +55,12 @@ if (!program.mailPassword) {
     console.log("Mail password argument (--mail-password) required");
     process.exit();
 }
-if (!program.mailHost) {
+if (!program.ses) {
+    program.ses = false;
+}else{
+    program.ses = true;
+}
+if (!program.mailHost && !program.ses) {
     console.log("Mail host argument (--mail-host) required");
     process.exit();
 }
@@ -67,6 +75,13 @@ if (!program.mailSubject) {
 if (!program.timeout) {
     program.timeout = 900000;
 }
+if (!program.ext) {
+    program.ext = ".png";
+}
+if (!program.region) {
+    program.region = "us-east-1";
+}
+
 
 
 //
@@ -83,6 +98,8 @@ console.log("Mail host:     " + program.mailHost);
 console.log("Mail subject:  " + program.mailSubject);
 console.log("Receiver:      " + program.receiver);
 console.log("Timeout:       " + program.timeout);
+console.log("Extension:     " + program.ext);
+console.log("SES:           " + program.ses);
 
 
 //
@@ -93,17 +110,17 @@ console.log("\nRendering dashboard...\n")
 var url = "https://" + program.deployment + "-www.sumologic.net";
 if (program.deployment == "us1" || program.deployment == "us1") {
     url = "https://service.sumologic.com"
-} 
+}
 if (program.deployment == "us2") {
     url = "https://service.us2.sumologic.com"
-} 
+}
 if (program.deployment == "dub" || program.deployment == "eu") {
     url = "https://service.eu.sumologic.com"
-} 
+}
 if (program.deployment == "syd" || program.deployment == "au") {
     url = "https://service.au.sumologic.com"
-} 
-var filename = "/tmp/out" + Date.now() + ".png";
+}
+var filename = "/tmp/out" + Date.now() + program.ext;
 var renderCommand = "bin/render_dashboard " +
     program.user + " " + program.password + " " + url + " " + program.dashboardId + " " + filename + " " + program.timeout;
 execSync(renderCommand, {stdio: 'inherit'});
@@ -114,11 +131,18 @@ execSync(renderCommand, {stdio: 'inherit'});
 //
 
 console.log("\nSending email...\n")
-var transportSpec = "smtps://" + encodeURIComponent(program.mailUser) + ":" +
-    program.mailPassword + "@" + program.mailHost;
-var sendCommand = "bin/send_email " +
-    transportSpec + " " + filename + " " + url + " " + program.dashboardId + " " +
-    program.receiver + " \"" + program.mailSubject + "\"";
+if(program.ses){
+  var sendCommand = "bin/send_email_ses " +
+      program.mailUser + " " + progran.mailPassword + " " + filename + " " + url + " " + program.dashboardId + " " +
+      program.receiver + " \"" + program.mailSubject + "\"" + " " + progran.region;
+}else{
+  var transportSpec = "smtps://" + encodeURIComponent(program.mailUser) + ":" +
+      program.mailPassword + "@" + program.mailHost;
+  var sendCommand = "bin/send_email " +
+      transportSpec + " " + filename + " " + url + " " + program.dashboardId + " " +
+      program.receiver + " \"" + program.mailSubject + "\"";
+}
+
 execSync(sendCommand, {stdio: 'inherit'});
 
 
