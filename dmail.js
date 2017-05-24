@@ -26,7 +26,6 @@ program
     .option('--mail-subject <mailSubject>', 'the subject of the email')
     .option('-r, --receiver <receiver>', 'address of the receiver of the email')
     .option('-t, --timeout <milliseconds>', 'timeout after this many milliseconds')
-    .option('--ext <ext>', 'extension of dashboard rendered .png or .pdf')
     .option('--ses', 'send an email with AWS SES')
     .option('--region <region>', 'AWS SES region (default us-east-1')
     .parse(process.argv);
@@ -98,7 +97,6 @@ console.log("Mail host:     " + program.mailHost);
 console.log("Mail subject:  " + program.mailSubject);
 console.log("Receiver:      " + program.receiver);
 console.log("Timeout:       " + program.timeout);
-console.log("Extension:     " + program.ext);
 console.log("SES:           " + program.ses);
 
 
@@ -120,7 +118,7 @@ if (program.deployment == "dub" || program.deployment == "eu") {
 if (program.deployment == "syd" || program.deployment == "au") {
     url = "https://service.au.sumologic.com"
 }
-var filename = "/tmp/out" + Date.now() + program.ext;
+var filename = "/tmp/out" + Date.now() + ".png";
 var renderCommand = "bin/render_dashboard " +
     program.user + " " + program.password + " " + url + " " + program.dashboardId + " " + filename + " " + program.timeout;
 execSync(renderCommand, {stdio: 'inherit'});
