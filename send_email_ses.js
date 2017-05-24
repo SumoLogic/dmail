@@ -45,7 +45,7 @@ var transporter = nodemailer.createTransport({
     tls: { rejectUnauthorized: false }
 });
 
-console.log("receivers : "+receiver);
+console.log("receivers : "+receiver+sender);
 
 //var transporter = nodemailer.createTransport(transportSpec);
 var uniqueID = "schnitzel" + Date.now();
