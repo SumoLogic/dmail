@@ -11,7 +11,7 @@
 // Send the dmail.
 //
 
-if (process.argv.length != 9) {
+if (process.argv.length != 10) {
     console.log("Arguments: [mailUser] [mailPassword] [filename] [url] [dashboard ID] [receiver] [subject] [region]");
     process.exit(-1);
 }
