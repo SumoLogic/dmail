@@ -11,8 +11,8 @@
 // Send the dmail.
 //
 
-if (process.argv.length != 10) {
-    console.log("Arguments: [mailUser] [mailPassword] [filename] [url] [dashboard ID] [receiver] [subject] [region]");
+if (process.argv.length != 11) {
+    console.log("Arguments: [mailUser] [mailPassword] [filename] [url] [dashboard ID] [sender] [receiver] [subject] [region]");
     process.exit(-1);
 }
 
@@ -21,9 +21,10 @@ var mailPassword = process.argv[3];
 var filename = process.argv[4];
 var url = process.argv[5];
 var dashboardId = process.argv[6];
-var receiver = process.argv[7];
-var subject = process.argv[8];
-var region = process.argv[9];
+var sender = process.argv[7];
+var receiver = process.argv[8];
+var subject = process.argv[9];
+var region = process.argv[10];
 
 
 var dashboardUrl = url + "/ui/dashboard.html?f=" + + dashboardId + "&t=r";
@@ -47,7 +48,7 @@ var transporter = nodemailer.createTransport({
 //var transporter = nodemailer.createTransport(transportSpec);
 var uniqueID = "schnitzel" + Date.now();
 var mailOptions = {
-    from: 'ops@gumgum.com',
+    from: sender,
     to: receiver,
     subject: subject,
     text: dashboardUrl + "\n\n" + 'Please enable HTML in your email client.\n',

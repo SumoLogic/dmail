@@ -24,6 +24,7 @@ program
     .option('--mail-password <mailPassword>', 'password of the mail user')
     .option('--mail-host <mailHost>', 'mail host to send email')
     .option('--mail-subject <mailSubject>', 'the subject of the email')
+    .option('-s, --sender <sender>', 'address of the sender of the email')
     .option('-r, --receiver <receiver>', 'address of the receiver of the email')
     .option('-t, --timeout <milliseconds>', 'timeout after this many milliseconds')
     .option('--ses', 'send an email with AWS SES')
@@ -67,10 +68,15 @@ if (!program.receiver) {
     console.log("Receiver argument (-r, --receiver) required");
     process.exit();
 }
+if (!program.sender) {
+    console.log("Sender argument (-s, --sender) required");
+    process.exit();
+}
 if (!program.mailSubject) {
     console.log("Subject argument (--mail-subject) required");
     process.exit();
 }
+
 if (!program.timeout) {
     program.timeout = 900000;
 }
@@ -96,6 +102,7 @@ console.log("Mail password: ********");
 console.log("Mail host:     " + program.mailHost);
 console.log("Mail subject:  " + program.mailSubject);
 console.log("Receiver:      " + program.receiver);
+console.log("Sender:        " + program.sender);
 console.log("Timeout:       " + program.timeout);
 console.log("SES:           " + program.ses);
 
@@ -132,13 +139,13 @@ console.log("\nSending email...\n")
 if(program.ses){
   var sendCommand = "bin/send_email_ses " +
       program.mailUser + " " + program.mailPassword + " " + filename + " " + url + " " + program.dashboardId + " " +
-      program.receiver + " \"" + program.mailSubject + "\" " + program.region;
+      program.receiver + " \"" + program.mailSubject + "\" " + program.region + " " + program.sender;
 }else{
   var transportSpec = "smtps://" + encodeURIComponent(program.mailUser) + ":" +
       program.mailPassword + "@" + program.mailHost;
   var sendCommand = "bin/send_email " +
       transportSpec + " " + filename + " " + url + " " + program.dashboardId + " " +
-      program.receiver + " \"" + program.mailSubject + "\"";
+      program.receiver + " \"" + program.mailSubject + "\" " + program.sender;
 }
 
 execSync(sendCommand, {stdio: 'inherit'});

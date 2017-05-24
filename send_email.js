@@ -11,8 +11,8 @@
 // Send the dmail.
 //
 
-if (process.argv.length != 8) {
-    console.log("Arguments: [transport-spec] [filename] [url] [dashboard ID] [receiver] [subject]");
+if (process.argv.length != 9) {
+    console.log("Arguments: [transport-spec] [filename] [url] [dashboard ID] [sender] [receiver] [subject]");
     process.exit(-1);
 }
 
@@ -20,8 +20,9 @@ var transportSpec = process.argv[2];
 var filename = process.argv[3];
 var url = process.argv[4];
 var dashboardId = process.argv[5];
-var receiver = process.argv[6];
-var subject = process.argv[7];
+var sender = process.argv[6];
+var receiver = process.argv[7];
+var subject = process.argv[8];
 
 var dashboardUrl = url + "/ui/dashboard.html?k=" + dashboardId + "&t=r";
 
@@ -30,7 +31,7 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport(transportSpec);
 var uniqueID = "schnitzel" + Date.now();
 var mailOptions = {
-    from: '"Christian Beedgen" <christian@sumologic.com>',
+    from: sender,
     to: receiver,
     subject: subject,
     text: dashboardUrl + "\n\n" + 'Please enable HTML in your email client.\n',
