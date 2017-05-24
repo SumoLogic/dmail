@@ -1,4 +1,4 @@
-# dmail - Send Sumo Logic dashboards via email (Support AWS Ses)
+# dmail - Send Sumo Logic dashboards via email (Support AWS SES)
 
 A simple hack to capture a screenshot of a Sumo Logic dashboard, which is then embedded into an email.
 
