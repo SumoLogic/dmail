@@ -138,14 +138,14 @@ execSync(renderCommand, {stdio: 'inherit'});
 console.log("\nSending email...\n")
 if(program.ses){
   var sendCommand = "bin/send_email_ses " +
-      program.mailUser + " " + program.mailPassword + " " + filename + " " + url + " " + program.dashboardId + " " +
-      program.receiver + " \"" + program.mailSubject + "\" " + program.region + " " + program.sender;
+      program.mailUser + " " + program.mailPassword + " " + filename + " " + url + " " + program.dashboardId + " " +  program.sender + " " +
+      program.receiver + " \"" + program.mailSubject + "\" " + program.region;
 }else{
   var transportSpec = "smtps://" + encodeURIComponent(program.mailUser) + ":" +
       program.mailPassword + "@" + program.mailHost;
   var sendCommand = "bin/send_email " +
-      transportSpec + " " + filename + " " + url + " " + program.dashboardId + " " +
-      program.receiver + " \"" + program.mailSubject + "\" " + program.sender;
+      transportSpec + " " + filename + " " + url + " " + program.dashboardId + " " + program.sender + " " +
+      program.receiver + " \"" + program.mailSubject + "\"" ;
 }
 
 execSync(sendCommand, {stdio: 'inherit'});
