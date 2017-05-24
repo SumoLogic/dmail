@@ -7,7 +7,7 @@
     "nodemailer": "^2.4.2",
     "phantomjs-prebuilt": "^2.1.7",
     "slimerjs": "^0.906.2",
-    "aws-sdk": "^2.0"
+    "aws-sdk": "^4.1.2"
   },
   "devDependencies": {}
 }
