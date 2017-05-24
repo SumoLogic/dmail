@@ -11,11 +11,6 @@
 // Send the dmail.
 //
 
-/*if (process.argv.length != 11) {
-    console.log("Arguments: [mailUser] [mailPassword] [filename] [url] [dashboard ID] [sender] [receiver] [subject] [region]");
-    process.exit(-1);
-}*/
-
 var mailUser = process.argv[2];
 var mailPassword = process.argv[3];
 var filename = process.argv[4];
@@ -45,7 +40,7 @@ var transporter = nodemailer.createTransport({
     tls: { rejectUnauthorized: false }
 });
 
-console.log("receivers : "+receiver+sender);
+console.log("The email will be sent by " + sender + " and received by "receiver);
 
 //var transporter = nodemailer.createTransport(transportSpec);
 var uniqueID = "schnitzel" + Date.now();

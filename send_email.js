@@ -11,11 +11,6 @@
 // Send the dmail.
 //
 
-if (process.argv.length != 9) {
-    console.log("Arguments: [transport-spec] [filename] [url] [dashboard ID] [sender] [receiver] [subject]");
-    process.exit(-1);
-}
-
 var transportSpec = process.argv[2];
 var filename = process.argv[3];
 var url = process.argv[4];
