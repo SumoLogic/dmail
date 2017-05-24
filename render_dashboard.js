@@ -12,7 +12,7 @@
 //
 
 var DOCUMENT_WIDTH = (screen.width*200)/100;
-var DOCUMENT_HEIGHT = (screen.height*220)/100;
+var DOCUMENT_HEIGHT = (screen.height*300)/100;
 //
 // Create the Casper environment.
 //
