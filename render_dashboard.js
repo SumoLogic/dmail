@@ -150,7 +150,6 @@ var dashboardUrl = url + "/ui/dashboard.html?k=" + dashboardId + "&t=r";
 
 casper.start(dashboardUrl, function () {
     casper.log("[DMAIL] Started with URL: " + dashboardUrl, 'info');
-	casper.log("[DMAIL] Started with URL: " + dashboardId, 'info');
 });
 casper.waitForSelector('#input-email', function () {
     casper.log("[DMAIL] Got selector #input-email, now filling login form...", 'info');
