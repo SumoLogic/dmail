@@ -22,9 +22,9 @@ var subject = process.argv[9];
 var region = process.argv[10];
 
 
-var dashboardUrl = url + "/ui/dashboard.html?k=" + + dashboardId + "&t=r";
+var dashboardUrl = url + "/ui/dashboard.html?k=" + dashboardId + "&t=r";
 
-console.log("dashboard : "+dashboardId)
+
 var nodemailer = require('nodemailer');
 var aws = require('aws-sdk');
 
