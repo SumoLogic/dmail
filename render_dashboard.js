@@ -11,10 +11,8 @@
 // Some constants.
 //
 
-var DOCUMENT_WIDTH = 720;
-var DOCUMENT_HEIGHT = 3000;
-
-
+var DOCUMENT_WIDTH = (screen.width*200)/100;
+var DOCUMENT_HEIGHT = (screen.height*200)/100;
 //
 // Create the Casper environment.
 //
@@ -148,7 +146,8 @@ casper.options.onResourceReceived = function (C, response) {
 // Put together the plan to execute.
 //
 
-var dashboardUrl = url + "/ui/dashboard.html?f=" + +dashboardId + "&t=r";
+var dashboardUrl = url + "/ui/dashboard.html?k=" + dashboardId + "&t=r";
+
 casper.start(dashboardUrl, function () {
     casper.log("[DMAIL] Started with URL: " + dashboardUrl, 'info');
 });
@@ -273,5 +272,3 @@ casper.wait(5000, function () {
 
 casper.log("[DMAIL] Capturing URL: " + dashboardUrl, 'info');
 casper.run();
-
-
