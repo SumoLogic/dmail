@@ -131,7 +131,7 @@ if (program.deployment == "dub" || program.deployment == "eu") {
 if (program.deployment == "syd" || program.deployment == "au") {
     url = "https://service.au.sumologic.com"
 }
-var filename = "/tmp/out" + Date.now() + ".pdf"//".png";
+var filename = "/tmp/out" + Date.now() + ".png";
 var renderCommand = "bin/render_dashboard " +
     program.user + " " + program.password + " " + url + " " + program.dashboardId + " " + filename + " " + program.timeout + " " + program.width + " " + program.height;
 execSync(renderCommand, {stdio: 'inherit'});
