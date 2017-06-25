@@ -8,11 +8,27 @@
  */
 
 //
-// Some constants.
+// Get the commandline arguments.
 //
 
-var DOCUMENT_WIDTH = (screen.width*200)/100;
-var DOCUMENT_HEIGHT = (screen.height*200)/100;
+var system = require('system');
+var args = system.args;
+if (args.length != 12) {
+    // casper.log("Arguments: [username] [password] [url] [dashboard-id] [output-filename] [timeout] [width] [height]", "error");
+    // casper.exit();
+    process.exit();
+}
+
+var username = args[4];
+var password = args[5];
+var url = args[6];
+var dashboardId = args[7];
+var filename = args[8];
+var timeout = args[9];
+var DOCUMENT_WIDTH = args[10];
+var DOCUMENT_HEIGHT = args[11];
+
+
 //
 // Create the Casper environment.
 //
@@ -26,31 +42,14 @@ var casper = require('casper').create({
     }
 });
 
-
-//
-// Get the commandline arguments.
-//
-
-var system = require('system');
-var args = system.args;
-if (args.length != 10) {
-    casper.log("Arguments: [username] [password] [url] [dashboard-id] [output-filename] [timeout]", "error");
-    casper.exit();
-    process.exit();
-}
-
-var username = args[4];
-var password = args[5];
-var url = args[6];
-var dashboardId = args[7];
-var filename = args[8];
-var timeout = args[9];
 casper.log("Username    : " + username);
 casper.log("Password    : ********");
 casper.log("URL         : " + url);
 casper.log("Dashboard ID: " + dashboardId);
 casper.log("Filename    : " + filename);
 casper.log("Timeout     : " + timeout);
+casper.log("Width       : " + DOCUMENT_WIDTH);
+casper.log("Height     : " + DOCUMENT_HEIGHT);
 
 
 //

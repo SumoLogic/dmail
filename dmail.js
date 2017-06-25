@@ -28,7 +28,9 @@ program
     .option('-r, --receiver <receiver>', 'address of the receiver of the email')
     .option('-t, --timeout <milliseconds>', 'timeout after this many milliseconds')
     .option('--ses', 'send an email with AWS SES')
-    .option('--region <region>', 'AWS SES region (default us-east-1')
+    .option('--region <region>', 'AWS SES region (default us-east-1)')
+    .option('--width <width>', 'Width of generated output in pixels (default 720)')
+    .option('--height <height>', 'Height of generated output in pixels (default 3000 to not cut off long dashboards)')
     .parse(process.argv);
 
 if (!program.user) {
@@ -57,7 +59,7 @@ if (!program.mailPassword) {
 }
 if (!program.ses) {
     program.ses = false;
-}else{
+} else {
     program.ses = true;
 }
 if (!program.mailHost && !program.ses) {
@@ -76,12 +78,17 @@ if (!program.mailSubject) {
     console.log("Subject argument (--mail-subject) required");
     process.exit();
 }
-
 if (!program.timeout) {
     program.timeout = 900000;
 }
 if (!program.region) {
     program.region = "us-east-1";
+}
+if (!program.width) {
+    program.width = 720;
+}
+if (!program.height) {
+    program.height = 3000;
 }
 
 
@@ -102,6 +109,8 @@ console.log("Receiver:      " + program.receiver);
 console.log("Sender:        " + program.sender);
 console.log("Timeout:       " + program.timeout);
 console.log("SES:           " + program.ses);
+console.log("Width:         " + program.width);
+console.log("Height:        " + program.height);
 
 
 //
@@ -124,7 +133,7 @@ if (program.deployment == "syd" || program.deployment == "au") {
 }
 var filename = "/tmp/out" + Date.now() + ".png";
 var renderCommand = "bin/render_dashboard " +
-    program.user + " " + program.password + " " + url + " " + program.dashboardId + " " + filename + " " + program.timeout;
+    program.user + " " + program.password + " " + url + " " + program.dashboardId + " " + filename + " " + program.timeout + " " + program.width + " " + program.height;
 execSync(renderCommand, {stdio: 'inherit'});
 
 
